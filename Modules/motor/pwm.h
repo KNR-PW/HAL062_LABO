@@ -6,14 +6,17 @@
  ******************************************************************************
  */
 
-#ifndef PWM_PWM_H_
-#define PWM_PWM_H_
+#ifndef MOTOR_PWM_H_
+#define MOTOR_PWM_H_
+
+#include <stdint.h>
+#include <stm32f4xx_hal.h>
 
 extern TIM_HandleTypeDef htim2;
 
 HAL_StatusTypeDef PWM_Init();
 
-HAL_StatusTypeDef PWM_SetDutyCycle(uint16_t duty);
+HAL_StatusTypeDef PWM_SetDutyCycle(uint32_t duty);
 
 
-#endif //PWM_PWM_H_
+#endif //MOTOR_PWM_H_

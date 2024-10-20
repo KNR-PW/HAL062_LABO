@@ -9,11 +9,12 @@
 
 /* Includes ------------------------------------------------------------------- */
 
+#include <motor/pwm.h>
 #include <stm32f4xx_hal.h>
 #include <stdint.h>
 #include "can/can.h"
 #include "watchdog/iwdg.h"
-#include "pwm/pwm.h"
+#include "motor/motor.h"
 
 
 /* Global variables ----------------------------------------------------------- */
@@ -43,9 +44,7 @@ int main(void) {
 //	MX_IWDG_Init();
 
 	CAN_Init(); 			//< CAN initialization
-	if(PWM_Init() != HAL_OK){
-		Error_Handler();
-	}
+	MainBoxMotor_Init();
 
 	duty = 100;
 
@@ -53,10 +52,18 @@ int main(void) {
 	// Infinity loop
 	  while (1)
 	  {
-		  PWM_SetDutyCycle(100);	// sets 10% (count is up to 1000)
-		  HAL_Delay(500);
-		  PWM_SetDutyCycle(1000);
-		  HAL_Delay(500);
+//		  DZIALA
+//		  liftMainBox(1);
+//		  HAL_Delay(1000);
+//		  liftMainBox(0);
+//		  HAL_Delay(1000);
+//		  lowerMainBox(1);
+//		  HAL_Delay(1000);
+//		  lowerMainBox(0);
+//		  HAL_Delay(1000);
+
+
+		  HAL_IWDG_Refresh(&hiwdg);
 	    /* USER CODE END WHILE */
 
 	    /* USER CODE BEGIN 3 */

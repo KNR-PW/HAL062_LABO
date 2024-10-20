@@ -8,6 +8,7 @@
 
 #include "can/can.h"
 #include <stdint.h>
+#include "motor/motor.h"
 
 static uint32_t CAN_TxMailbox;
 static uint8_t CAN_RxMsg[8];
@@ -68,8 +69,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 	HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &CAN_RxHeader, CAN_RxMsg);
 
 	int8_t refValue = 0;
-//	if (CAN_RxHeader.StdId == 20)
-		// pass
+	if (CAN_RxHeader.StdId == 200) // startup lab module
+		 ; // TODO
+	else if(CAN_RxHeader.StdId == 210){ // move main frame up
+
+	}
 
 
 }

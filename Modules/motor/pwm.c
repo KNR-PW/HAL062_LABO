@@ -7,11 +7,11 @@
  */
 
 #include <stm32f4xx_hal.h>
-#include "pwm.h"
+#include <motor/pwm.h>
 #include "error_handler/error_handler.h"
 
 TIM_HandleTypeDef htim2;
-uint32_t AAR = 1000-1;
+uint32_t AAR = 100-1;
 
 HAL_StatusTypeDef PWM_Init(void)
 {
@@ -35,12 +35,12 @@ HAL_StatusTypeDef PWM_Init(void)
 		return HAL_ERROR;
 	}
 
-	__HAL_RCC_GPIOA_CLK_ENABLE();
 	/**TIM2 GPIO Configuration
 	PA0-WKUP     ------> TIM2_CH1
 	*/
 	GPIO_InitStruct.Pin = GPIO_PIN_0;
-	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+//	GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;			// open-drain mode to set 5V max on output
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;			// temp
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
@@ -71,8 +71,8 @@ HAL_StatusTypeDef PWM_Init(void)
 
 }
 
-HAL_StatusTypeDef PWM_SetDutyCycle(uint16_t duty) {
-//	TIM2->CCR1 = 0;
+HAL_StatusTypeDef PWM_SetDutyCycle(uint32_t duty) {
+//	uint32_t duty = (uint32_t)((duty_percentage * AAR) / 100);
 	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, duty);
 	return HAL_OK;
 }
